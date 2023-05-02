@@ -17,6 +17,7 @@ const Homepage = () => {
         <Col span={12}>
           <Statistic
             title="Total Exchanges"
+            value={1}
             // value={millify(globalStats.totalExchanges)}
           />
         </Col>
