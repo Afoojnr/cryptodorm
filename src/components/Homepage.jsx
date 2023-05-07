@@ -8,7 +8,9 @@ import { useGetCryptosQuery } from "../service/cryptoApi";
 const { Title } = Typography;
 const Homepage = () => {
   const { data, isFetching } = useGetCryptosQuery();
-  console.log(data);
+  const globalStats = data?.data?.stats;
+
+  if (isFetching) return "Loading";
   return (
     <>
       <Title level={2} className="heading">
@@ -16,37 +18,37 @@ const Homepage = () => {
       </Title>
       <Row>
         <Col span={12}>
-          <Statistic title="Total Cryptocurrencies" value={5} />
+          <Statistic title="Total Cryptocurrencies" value={globalStats.total} />
         </Col>
         <Col span={12}>
           <Statistic
             title="Total Exchanges"
-            value={5}
-            // value={millify(globalStats.totalExchanges)}
+          
+            value={millify(globalStats.totalExchanges)}
           />
         </Col>
         <Col span={12}>
           <Statistic
             title="Total Market Cap:"
-            // value={`$${millify(globalStats.totalMarketCap)}`}
+            value={`$${millify(globalStats.totalMarketCap)}`}
           />
         </Col>
         <Col span={12}>
           <Statistic
             title="Total 24h Volume"
-            // value={`$${millify(globalStats.total24hVolume)}`}
+            value={`$${millify(globalStats.total24hVolume)}`}
           />
         </Col>
         <Col span={12}>
           <Statistic
             title="Total Cryptocurrencies"
-            // value={globalStats.total}
+            value={globalStats.total}
           />
         </Col>
         <Col span={12}>
           <Statistic
             title="Total Markets"
-            // value={millify(globalStats.totalMarkets)}
+            value={millify(globalStats.totalMarkets)}
           />
         </Col>
       </Row>
