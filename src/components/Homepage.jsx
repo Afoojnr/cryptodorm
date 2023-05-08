@@ -4,6 +4,7 @@ import { Typography, Row, Col, Statistic } from "antd";
 import { Link } from "react-router-dom";
 
 import { useGetCryptosQuery } from "../service/cryptoApi";
+import {Cryptocurrencies,News} from '../components'
 
 const { Title } = Typography;
 const Homepage = () => {
@@ -23,7 +24,6 @@ const Homepage = () => {
         <Col span={12}>
           <Statistic
             title="Total Exchanges"
-          
             value={millify(globalStats.totalExchanges)}
           />
         </Col>
@@ -40,10 +40,7 @@ const Homepage = () => {
           />
         </Col>
         <Col span={12}>
-          <Statistic
-            title="Total Cryptocurrencies"
-            value={globalStats.total}
-          />
+          <Statistic title="Total Cryptocurrencies" value={globalStats.total} />
         </Col>
         <Col span={12}>
           <Statistic
@@ -52,6 +49,24 @@ const Homepage = () => {
           />
         </Col>
       </Row>
+      <div className="home-heading-container">
+        <Title level={2} className="home-title">
+          Top 10 Cryptos In The World
+        </Title>
+        <Title level={3} className="show-more">
+          <Link to="/cryptocurrencies">Show more</Link>
+        </Title>
+      </div>
+      <Cryptocurrencies simplified />
+      <div className="home-heading-container">
+        <Title level={2} className="home-title">
+          Latest Crypto News
+        </Title>
+        <Title level={3}>
+          <Link to="/news">Show more</Link>
+        </Title>
+      </div>
+      <News simplified />
     </>
   );
 };
