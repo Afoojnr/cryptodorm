@@ -20,7 +20,7 @@ const News = ({ simplified }) => {
     count: simplified ? 6 : 12,
   });
   console.log(cryptoNews);
-  if (!cryptoNews?.value) return "<Load/>";
+  if (!cryptoNews?.value) return "Loading...";
 
   return (
     <Row gutter={[24, 24]}>
