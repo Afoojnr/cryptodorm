@@ -180,7 +180,7 @@ const CryptoDetails = () => {
           </Title>
           {cryptoDetails?.description &&
             HTMLReactParser(cryptoDetails?.description)}
-          {console.log(cryptoDetails)}
+          
         </Row>
         <Col className="coin-links">
           <Title level={3} className="coin-details-heading">
