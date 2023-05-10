@@ -44,7 +44,7 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
 
   return (
     <>
-      {/* <Row className="chart-header">
+      <Row className="chart-header">
         <Title level={2} className="chart-title">
           {coinName} Price Chart{" "}
         </Title>
@@ -57,7 +57,7 @@ const LineChart = ({ coinHistory, currentPrice, coinName }) => {
           </Title>
         </Col>
       </Row>
-      <Line data={data} options={options} /> */}
+      {/* <Line data={data} options={options} /> */}
     </>
   );
 };
