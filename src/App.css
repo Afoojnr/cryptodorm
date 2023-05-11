@@ -29,6 +29,7 @@ a:hover {
 
 .main {
   flex: 0.8;
+  align-items: center;
   width: 100%;
 }
 .routes {
@@ -75,7 +76,7 @@ a:hover {
 
 @media screen and (max-width: 1300px) {
   .main {
-    margin-left: 22px;
+    margin-left: 1vw;
   }
 }
 
@@ -348,7 +349,7 @@ a:hover {
   margin-top: 0px !important;
 }
 .exchange-image {
-  margin: 0px 5px !important;
+  margin: 0px 10px !important;
 }
 .search-crypto {
   margin: 20px auto 30px auto;

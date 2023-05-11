@@ -11,17 +11,16 @@ import {
   Statistic,
 } from "antd";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
-import HTMLReactParser from "html-react-parser";
 
 import { useGetCryptosQuery } from "../service/cryptoApi";
 import Loader from "./Loader";
+import { Cryptocurrencies } from ".";
 
 const { Text } = Typography;
-const { Panel } = Collapse;
 
 const Exchanges = ({ simplified }) => {
   const count = simplified ? 10 : 100;
-  const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
+  const { data: cryptosList, isFetching, isSuccess } = useGetCryptosQuery(count);
   const [smallText, setSmallText] = useState(true);
   const [cryptos, setCryptos] = useState();
   const [searchTerm, setSearchTerm] = useState("");
@@ -124,7 +123,6 @@ const Exchanges = ({ simplified }) => {
   ];
 
   if (isFetching) return <Loader />;
-
   return (
     <>
       {!simplified && (
@@ -136,9 +134,21 @@ const Exchanges = ({ simplified }) => {
         </div>
       )}
 
-      <Table dataSource={dataSource} columns={columns} pagination={false} />
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        pagination={{ defaultPageSize: 25 }}
+        loading={{
+          indicator: (
+            <div>
+              <Loader />
+            </div>
+          ),
+          spinning: isFetching,
+        }}
+      />
     </>
   );
 };
 
-export default Exchanges;
+export default Cryptocurrencies;
