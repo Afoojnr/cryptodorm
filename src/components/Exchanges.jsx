@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
 import millify from "millify";
 import { Link } from "react-router-dom";
-import { Collapse, Row, Col, Typography, Avatar } from "antd";
+import {
+  Collapse,
+  Row,
+  Col,
+  Typography,
+  Avatar,
+  Input,
+  Table,
+  Tag,
+  Statistic,
+} from "antd";
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 import HTMLReactParser from "html-react-parser";
 
 import { useGetCryptosQuery } from "../service/cryptoApi";
@@ -17,6 +28,57 @@ const Exchanges = () => {
   const [cryptos, setCryptos] = useState();
   const [searchTerm, setSearchTerm] = useState("");
 
+  const dataSource = cryptos?.map((crypto) => ({
+    key: crypto.uuid,
+    rank: crypto.rank,
+    coin: crypto.name,
+    price: `$${millify(crypto.price)}`,
+    market_cap: `$${millify(crypto.marketCap)}`,
+    daily_change: crypto.change,
+  }));
+
+  const columns = [
+    {
+      title: "#",
+      dataIndex: "rank",
+      key: "rank",
+    },
+    {
+      title: "Coins",
+      dataIndex: "coin",
+      key: "coin",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "Market Cap",
+      dataIndex: "market_cap",
+      key: "market_cap",
+    },
+    {
+      title: "Daily Change",
+      dataIndex: "daily_change",
+      key: "daily_change",
+      render: (daily_change) => (
+        <>
+          <Statistic
+            value={daily_change}
+            precision={2}
+            valueStyle={{
+              color: `${daily_change < 0 ? "red" : "green"}`,
+              fontSize: '20px'
+            }}
+            prefix={daily_change<0?<ArrowDownOutlined />:<ArrowUpOutlined />}
+            suffix="%"
+          />
+        </>
+      ),
+    },
+  ];
+
   useEffect(() => {
     setCryptos(cryptosList?.data?.coins);
 
@@ -31,6 +93,16 @@ const Exchanges = () => {
 
   return (
     <>
+      <Table dataSource={dataSource} columns={columns} />
+
+      {!simplified && (
+        <div className="search-crypto">
+          <Input
+            placeholder="Search Cryptocurrency"
+            onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+          />
+        </div>
+      )}
       <Row>
         <Col span={6}>Coins</Col>
         <Col span={6}>Price</Col>
@@ -78,37 +150,3 @@ const Exchanges = () => {
 };
 
 export default Exchanges;
-
-// const dataSource = [
-//   {
-//     key: crypto.uuid,
-//     name: crypto.name,
-//     age: 32,
-//     address: "10 Downing Street",
-//   },
-// ];
-
-// const columns = [
-//   {
-//     title: "Coins",
-//     dataIndex: "coin",
-//     key: "coin",
-//   },
-//   {
-//     title: "Price",
-//     dataIndex: "price",
-//     key: "price",
-//   },
-//   {
-//     title: "Market Cap",
-//     dataIndex: "market_cap",
-//     key: "market_cap",
-//   },
-//   {
-//     title: "Daily Change",
-//     dataIndex: "daily_change",
-//     key: "daily_change",
-//   },
-// ];
-
-// <Table dataSource={dataSource} columns={columns} />;
