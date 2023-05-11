@@ -136,50 +136,7 @@ const Exchanges = ({ simplified }) => {
         </div>
       )}
 
-      
-        <Table dataSource={dataSource} columns={columns} pagination={false} />
-      {/* <Row>
-        <Col span={6}>Coins</Col>
-        <Col span={6}>Price</Col>
-        <Col span={6}>Market Cap</Col>
-        <Col span={6}>Change</Col>
-      </Row>
-      <Row>
-        {cryptos?.map((crypto) => (
-          <Col span={24}>
-            <Link key={crypto.uuid} to={`/crypto/${crypto.uuid}`}>
-              <Collapse>
-                <Panel
-                  key={crypto.uuid}
-                  showArrow={false}
-                  header={
-                    <Row key={crypto.uuid}>
-                      <Col span={6}>
-                        <Text>
-                          <strong>{crypto.rank}.</strong>
-                        </Text>
-                        <Avatar
-                          size="small"
-                          className="exchange-image"
-                          src={crypto.iconUrl}
-                        />
-                        <Text>
-                          <strong>{crypto.name}</strong>
-                        </Text>
-                      </Col>
-                      <Col span={6}>${millify(crypto.price)}</Col>
-                      <Col span={6}>{millify(crypto.marketCap)}</Col>
-                      <Col span={6}>{millify(crypto.change)}%</Col>
-                    </Row>
-                  }
-                >
-                  {HTMLReactParser(crypto.description || "")}
-                </Panel>
-              </Collapse>
-            </Link>
-          </Col>
-        ))}
-      </Row> */}
+      <Table dataSource={dataSource} columns={columns} pagination={false} />
     </>
   );
 };
