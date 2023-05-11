@@ -4,12 +4,10 @@ import { Link } from "react-router-dom";
 import {
   Collapse,
   Row,
-  Col,
   Typography,
   Avatar,
   Input,
   Table,
-  Tag,
   Statistic,
 } from "antd";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
@@ -21,17 +19,47 @@ import Loader from "./Loader";
 const { Text } = Typography;
 const { Panel } = Collapse;
 
-const Exchanges = () => {
-  const simplified = false;
+const Exchanges = ({ simplified }) => {
   const count = simplified ? 10 : 100;
   const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
+  const [smallText, setSmallText] = useState(true);
   const [cryptos, setCryptos] = useState();
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [screenSize, setScreenSize] = useState(undefined);
+
+  useEffect(() => {
+    setCryptos(cryptosList?.data?.coins);
+
+    const filteredData = cryptosList?.data?.coins.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm)
+    );
+
+    setCryptos(filteredData);
+  }, [cryptosList, searchTerm]);
+
+  useEffect(() => {
+    const handleResize = () => setScreenSize(window.innerWidth);
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (screenSize <= 800) {
+      setSmallText(true);
+    } else {
+      setSmallText(false);
+    }
+  }, [screenSize]);
 
   const dataSource = cryptos?.map((crypto) => ({
     key: crypto.uuid,
     rank: crypto.rank,
-    coin: crypto.name,
+    coin: crypto,
     price: `$${millify(crypto.price)}`,
     market_cap: `$${millify(crypto.marketCap)}`,
     daily_change: crypto.change,
@@ -39,7 +67,7 @@ const Exchanges = () => {
 
   const columns = [
     {
-      title: "#",
+      title: "Rank",
       dataIndex: "rank",
       key: "rank",
     },
@@ -47,6 +75,14 @@ const Exchanges = () => {
       title: "Coins",
       dataIndex: "coin",
       key: "coin",
+      render: (coin) => (
+        <Row>
+          <Avatar size="small" className="exchange-image" src={coin.iconUrl} />
+          <Text>
+            <strong>{coin.name}</strong>
+          </Text>
+        </Row>
+      ),
     },
     {
       title: "Price",
@@ -69,32 +105,23 @@ const Exchanges = () => {
             precision={2}
             valueStyle={{
               color: `${daily_change < 0 ? "red" : "green"}`,
-              fontSize: '20px'
+              fontSize: `${smallText ? "10px" : "20px"}`,
             }}
-            prefix={daily_change<0?<ArrowDownOutlined />:<ArrowUpOutlined />}
-            suffix="%"
+            prefix={
+              daily_change < 0 ? <ArrowDownOutlined /> : <ArrowUpOutlined />
+            }
+            suffix={smallText ? "" : "%"}
           />
         </>
       ),
     },
   ];
 
-  useEffect(() => {
-    setCryptos(cryptosList?.data?.coins);
-
-    const filteredData = cryptosList?.data?.coins.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm)
-    );
-
-    setCryptos(filteredData);
-  }, [cryptosList, searchTerm]);
-  console.log(cryptos);
+  
   if (isFetching) return <Loader />;
 
   return (
     <>
-      <Table dataSource={dataSource} columns={columns} />
-
       {!simplified && (
         <div className="search-crypto">
           <Input
@@ -103,7 +130,8 @@ const Exchanges = () => {
           />
         </div>
       )}
-      <Row>
+      <Table dataSource={dataSource} columns={columns} />
+      {/* <Row>
         <Col span={6}>Coins</Col>
         <Col span={6}>Price</Col>
         <Col span={6}>Market Cap</Col>
@@ -144,7 +172,7 @@ const Exchanges = () => {
             </Link>
           </Col>
         ))}
-      </Row>
+      </Row> */}
     </>
   );
 };
