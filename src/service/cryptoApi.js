@@ -35,7 +35,6 @@ export const cryptoApi = createApi({
       query: ({ coinId, timeperiod }) =>
         createRequest(`coin/${coinId}/history?timeperiod=${timeperiod}`),
     }),
-    
   }),
 });
 

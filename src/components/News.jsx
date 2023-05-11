@@ -4,7 +4,7 @@ import moment from "moment";
 
 import { useGetCryptosQuery } from "../service/cryptoApi";
 import { useGetCryptoNewsQuery } from "../service/cryptoNewsApi";
-// import Loader from './Loader';
+import Loader from './Loader';
 
 const demoImage =
   "https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News";
@@ -19,7 +19,7 @@ const News = ({ simplified }) => {
     newsCategory,
     count: simplified ? 6 : 12,
   });
-  if (!cryptoNews?.value) return "Loading...";
+  if (!cryptoNews?.value) return <Loader/>;
 
   return (
     <Row gutter={[24, 24]}>
