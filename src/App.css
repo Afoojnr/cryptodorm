@@ -28,7 +28,6 @@ a:hover {
 }
 
 .main {
- 
   align-items: center;
   width: 100%;
 }
@@ -42,7 +41,7 @@ a:hover {
 
 .logo-container {
   background-color: #001529;
-  display: flex ;
+  display: flex;
   padding: 20px;
   align-items: center;
   width: 100%;
@@ -70,7 +69,6 @@ a:hover {
   align-items: center;
 }
 
-
 @media screen and (max-width: 800px) {
   .app {
     flex-direction: column;
@@ -83,16 +81,11 @@ a:hover {
 
   .main {
     flex: 1;
-    margin-top: 90px;
-    margin-left: 0px;
-    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
   }
 
   .nav-container {
-    /* height: 8vh;
-    position: fixed;
-    width: 100%;
-    z-index: 100; */
     background-color: var(--bgSecondary);
   }
 
@@ -260,11 +253,6 @@ a:hover {
     margin: 0;
   }
 }
-@media screen and (max-width: 500px) {
-  .heading {
-    margin-top: 20px;
-  }
-}
 
 .select-news {
   width: 180px;
@@ -353,5 +341,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  text-align: center;
+  justify-content: center;
   align-items: center;
 }

@@ -4,7 +4,7 @@ import moment from "moment";
 
 import { useGetCryptosQuery } from "../service/cryptoApi";
 import { useGetCryptoNewsQuery } from "../service/cryptoNewsApi";
-import Loader from './Loader';
+import Loader from "./Loader";
 
 const demoImage =
   "https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News";
@@ -19,7 +19,7 @@ const News = ({ simplified }) => {
     newsCategory,
     count: simplified ? 6 : 12,
   });
-  if (!cryptoNews?.value) return <Loader/>;
+  if (!cryptoNews?.value) return <Loader />;
 
   return (
     <Row gutter={[24, 24]}>
@@ -31,6 +31,11 @@ const News = ({ simplified }) => {
             placeholder="Select a Crypto"
             optionFilterProp="children"
             onChange={(value) => setNewsCategory(value)}
+            style={{
+              color: "#001529",
+              border: "1px solid #001529",
+              borderRadius: "5px",
+            }}
             filterOption={(input, option) =>
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }

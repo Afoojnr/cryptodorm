@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
 import millify from "millify";
 import { Link } from "react-router-dom";
-import {
-  Collapse,
-  Row,
-  Typography,
-  Avatar,
-  Input,
-  Table,
-  Statistic,
-} from "antd";
+import { Row, Typography, Avatar, Input, Table, Statistic } from "antd";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 import { useGetCryptosQuery } from "../service/cryptoApi";
@@ -19,11 +11,7 @@ const { Text } = Typography;
 
 const Cryptocurrencies = ({ simplified }) => {
   const count = simplified ? 10 : 100;
-  const {
-    data: cryptosList,
-    isFetching,
-    isSuccess,
-  } = useGetCryptosQuery(count);
+  const { data: cryptosList, isFetching } = useGetCryptosQuery(count);
   const [smallText, setSmallText] = useState(true);
   const [cryptos, setCryptos] = useState();
   const [searchTerm, setSearchTerm] = useState("");
@@ -132,6 +120,8 @@ const Cryptocurrencies = ({ simplified }) => {
         <div className="search-crypto">
           <Input
             placeholder="Search Cryptocurrency"
+            bordered={true}
+            style={{ color: "#001529", border: "1px solid #001529" }}
             onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
           />
         </div>

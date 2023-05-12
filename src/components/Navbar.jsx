@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Button, Menu, Typography, Avatar, Drawer, Layout } from "antd";
+import { Button, Menu, Typography, Avatar, Drawer } from "antd";
 import { Link } from "react-router-dom";
-import icon from "../images/cryptocurrency.png";
+import icon from "../images/crypto.png";
 import {
   HomeOutlined,
-  MoneyCollectOutlined,
   BulbOutlined,
   FundOutlined,
   MenuOutlined,
-  TrophyOutlined,
 } from "@ant-design/icons";
-const { Header, Sider } = Layout;
 
 const Navbar = () => {
   const [smallScreen, setSmallScreen] = useState(false);
   const [screenSize, setScreenSize] = useState(undefined);
-  const [openMenu, setOpenMenu] = useState(true);
-  const [bgColor, setBgColor] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [bgColor, setBgColor] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
