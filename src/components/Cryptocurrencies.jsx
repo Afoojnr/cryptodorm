@@ -14,13 +14,16 @@ import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 import { useGetCryptosQuery } from "../service/cryptoApi";
 import Loader from "./Loader";
-import { Cryptocurrencies } from ".";
 
 const { Text } = Typography;
 
-const Exchanges = ({ simplified }) => {
+const Cryptocurrencies = ({ simplified }) => {
   const count = simplified ? 10 : 100;
-  const { data: cryptosList, isFetching, isSuccess } = useGetCryptosQuery(count);
+  const {
+    data: cryptosList,
+    isFetching,
+    isSuccess,
+  } = useGetCryptosQuery(count);
   const [smallText, setSmallText] = useState(true);
   const [cryptos, setCryptos] = useState();
   const [searchTerm, setSearchTerm] = useState("");

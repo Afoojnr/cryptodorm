@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Button, Menu, Typography, Avatar } from "antd";
+import { Button, Menu, Typography, Avatar, Drawer, Layout } from "antd";
 import { Link } from "react-router-dom";
+import icon from "../images/cryptocurrency.png";
 import {
   HomeOutlined,
   MoneyCollectOutlined,
   BulbOutlined,
   FundOutlined,
   MenuOutlined,
+  TrophyOutlined,
 } from "@ant-design/icons";
-
-import icon from "../images/cryptocurrency.png";
+const { Header, Sider } = Layout;
 
 const Navbar = () => {
-  const [activeMenu, setActiveMenu] = useState(true);
+  const [smallScreen, setSmallScreen] = useState(false);
   const [screenSize, setScreenSize] = useState(undefined);
+  const [openMenu, setOpenMenu] = useState(true);
+  const [bgColor, setBgColor] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -27,41 +30,87 @@ const Navbar = () => {
 
   useEffect(() => {
     if (screenSize <= 800) {
-      setActiveMenu(false);
+      setSmallScreen(true);
     } else {
-      setActiveMenu(true);
+      setSmallScreen(false);
     }
   }, [screenSize]);
 
   return (
     <div className="nav-container">
-      <div className="logo-container">
-        <Avatar src={icon} size="large" />
-        <Typography.Title level={2} className="logo">
-          <Link to="/">CryptoDorm</Link>
-        </Typography.Title>
-        <Button
-          className="menu-control-container"
-          onClick={() => setActiveMenu(!activeMenu)}
-        >
-          <MenuOutlined />
-        </Button>
-      </div>
-      {activeMenu && (
-        <Menu theme="dark">
-          <Menu.Item icon={<HomeOutlined />}>
-            <Link to="/">Home</Link>
-          </Menu.Item>
-          <Menu.Item icon={<FundOutlined />}>
-            <Link to="/cryptocurrencies">Cryptocurrencies</Link>
-          </Menu.Item>
-          {/* <Menu.Item icon={<MoneyCollectOutlined />}>
-            <Link to="/exchanges">Exchanges</Link>
-          </Menu.Item> */}
-          <Menu.Item icon={<BulbOutlined />}>
-            <Link to="/news">News</Link>
-          </Menu.Item>
-        </Menu>
+      {smallScreen && (
+        <>
+          <div className="logo-container">
+            <Avatar src={icon} size="large" />
+            <Typography.Title level={2} className="logo">
+              <Link to="/">CryptoDorm</Link>
+            </Typography.Title>
+            <Button
+              className="menu-control-container"
+              onClick={() => setOpenMenu(!openMenu)}
+            >
+              <MenuOutlined />
+            </Button>
+          </div>
+          <Drawer
+            onClose={() => {
+              setOpenMenu(false);
+            }}
+            placement="right"
+            open={openMenu}
+            closable={false}
+            style={{ backgroundColor: "#001529" }}
+          >
+            <Menu
+              theme="dark"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-evenly",
+              }}
+              mode="inline"
+            >
+              <Menu.Item icon={<HomeOutlined />}>
+                <Link to="/">Home</Link>
+              </Menu.Item>
+              <Menu.Item icon={<FundOutlined />}>
+                <Link to="/cryptocurrencies">Cryptocurrencies</Link>
+              </Menu.Item>
+              <Menu.Item icon={<BulbOutlined />}>
+                <Link to="/news">News</Link>
+              </Menu.Item>
+            </Menu>
+          </Drawer>
+        </>
+      )}
+
+      {!smallScreen && (
+        <>
+          <Menu theme="dark" mode="horizontal">
+            <Menu.Item
+              style={{
+                marginRight: "20vw",
+                backgroundColor: `${bgColor && "#001529"}`,
+                color: "white",
+              }}
+              icon={<Avatar src={icon} size="medium" />}
+              onClick={() => setBgColor(true)}
+            >
+              <Link to="/" style={{ fontSize: "30px" }}>
+                CryptoDorm
+              </Link>
+            </Menu.Item>
+            <Menu.Item icon={<HomeOutlined />}>
+              <Link to="/">Home</Link>
+            </Menu.Item>
+            <Menu.Item icon={<FundOutlined />}>
+              <Link to="/cryptocurrencies">Cryptocurrencies</Link>
+            </Menu.Item>
+            <Menu.Item icon={<BulbOutlined />}>
+              <Link to="/news">News</Link>
+            </Menu.Item>
+          </Menu>
+        </>
       )}
     </div>
   );
